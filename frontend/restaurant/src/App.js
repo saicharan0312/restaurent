@@ -22,7 +22,7 @@ function App() {
     <div className="App">
       <h1> Restaurents </h1>
       <button onClick={openModal}>create</button>
-      {isModalOpen ? (
+      {isModalOpen ? ( 
         <Fillout 
           isOpen={isModalOpen} 
           handleClose={closeModal} 
