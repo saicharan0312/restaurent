@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import axios from 'axios';
 
 const Fillout = (props) => {
   const editable = props.isEdit;
+  const apiUrl = 'http://localhost:5000/restaurents';
   const [formData, setFormData] = useState({
     id : props.id,
     name: props.name,
@@ -28,11 +30,27 @@ const Fillout = (props) => {
     // Handle form submission, e.g., send data to the server
     if(editable === "edit")
     {
-        console.log('Form data submitted editable:', formData);
+      const updateData = (async () => {
+        try {
+          const response = await axios.put(apiUrl, formData);
+          console.log('Restaurant data updated successfully:', response.data);
+        } catch (error) {
+          console.error('Error updating restaurant data:', error);
+        }
+      });
+      updateData();
     }
     else
     {
-        console.log('Form data submitted newone:', formData);
+      const createNew = (async () => {
+        try {
+          const response = await axios.post(apiUrl, formData);
+          console.log('Restaurant data updated successfully:', response.data);
+        } catch (error) {
+          console.error('Error updating restaurant data:', error);
+        }
+      });
+      createNew();
     }
     props.handleClose();
   };

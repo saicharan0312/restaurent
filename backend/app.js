@@ -4,7 +4,8 @@ import {
     getAllRestaurents,
     editRestaurent,
     creatRestaurent,
-    deleteRestaurent
+    deleteRestaurent,
+    updateRestaurent
 } from "./backendwork.js";
 
 const app = express();
@@ -20,7 +21,6 @@ app.get("/restaurents", async (req, res) => {
 
 app.delete('/restaurents/:id', async (req, res) => {
     const id = req.params.id;
-    console.log("working on delete app", id);
     const createdR = await deleteRestaurent(id);
     res.status(204).send();
   });
@@ -37,6 +37,12 @@ app.post("/restaurents", async (req, res) => {
     const createdR = await creatRestaurent(name, address, phone, email);
     res.status(201).send({"created one" : createdR});
 });
+
+app.put('/restaurents', async (req, res) => {
+    const {id, name, address, phone, email} = req.body;
+    const updateR = await updateRestaurent(id, name, address, phone, email);
+    res.status(201).send({"udated" : updateR});
+  });
 
 app.use((err, req, res, next) => {
     console.log(err.stack)

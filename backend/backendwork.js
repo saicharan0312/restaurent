@@ -13,7 +13,6 @@ export async function getAllRestaurents() {
 }
 
 export async function editRestaurent(id) {
-    console.log("iam here");
     const single = await pool.query(`
     select * from restaurant_list where id = ${id}
     `)
@@ -21,12 +20,16 @@ export async function editRestaurent(id) {
 }
 
 export async function deleteRestaurent(id) {
-    console.log("working on delete backend", id);
-    console.log("iam here");
     const single = await pool.query(`
     delete from restaurant_list where id = ${id}
     `)
     return single[0];
+}
+
+export async function updateRestaurent(id, name, address, phone, email) {
+    const upadted = await pool.query(`
+    update restaurant_list set name = ?, address = ?, contact_phone = ?, contact_email = ? where id = ?;
+    `, [name, address, phone, email, id]);
 }
 
 export async function creatRestaurent(name, address, phone, email) {
